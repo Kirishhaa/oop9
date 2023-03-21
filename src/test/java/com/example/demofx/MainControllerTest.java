@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import javax.xml.crypto.dom.DOMCryptoContext;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,10 +12,10 @@ class MainControllerTest {
 
     private static final double EPS = 1e-8;
 
-    MainController controller;
+    Operations operations;
     @BeforeEach
     void setUp() {
-        controller = new MainController();
+        operations = new Operations();
     }
 
     @Test
@@ -25,13 +24,13 @@ class MainControllerTest {
         double end = 2.0;
         double h = 0.002;
         int expected = 1001;
-        assertEquals(expected, controller.calcSteps(start,end,h));
+        assertEquals(expected, operations.calcSteps(start,end,h));
     }
 
     @ParameterizedTest
     @CsvSource({"4, 0","3.72046505, 1.4","0.98386991, 2"})
     public void calcYTest(double expected, double x){
-        assertEquals(expected, controller.calcY(x), EPS);
+        assertEquals(expected, operations.calcY(x), EPS);
     }
 
     @ParameterizedTest
@@ -47,7 +46,7 @@ class MainControllerTest {
 
         double expectedY = 9.0529312;
         double expectedX = 1.398;
-        Point currentPoint = controller.findMax(values);
+        Point currentPoint = operations.findMax(values);
         assertEquals(expectedY, currentPoint.y(), EPS);
         assertEquals(expectedX, currentPoint.x(), EPS);
     }
@@ -58,7 +57,7 @@ class MainControllerTest {
 
         double expectedY = 0.983869910;
         double expectedX = 2;
-        Point currentPoint = controller.findMin(values);
+        Point currentPoint = operations.findMin(values);
         assertEquals(expectedY, currentPoint.y(), EPS);
         assertEquals(expectedX, currentPoint.x(), EPS);
     }
@@ -67,8 +66,8 @@ class MainControllerTest {
         double start = 0;
         double end = 2;
         double step = 0.002;
-        return controller.getMassiveFromData(
-                start,step, controller.calcSteps(start,end, step));
+        return operations.getMassiveFromData(
+                start,step, operations.calcSteps(start,end, step));
     }
 
 
@@ -76,13 +75,13 @@ class MainControllerTest {
     public void sumValuesTest(){
         ArrayList<Point> values = createArrayList();
         double expected = 4285.09577854;
-        assertEquals(expected, controller.sumValues(values), EPS);
+        assertEquals(expected, operations.sumValues(values), EPS);
     }
 
     @Test
     public void averageValuesTest(){
         ArrayList<Point> values = createArrayList();
         double expected = 4.28081496;
-        assertEquals(expected, controller.averageValues(values), EPS);
+        assertEquals(expected, operations.averageValues(values), EPS);
     }
 }
