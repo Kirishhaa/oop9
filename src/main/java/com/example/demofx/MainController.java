@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainController {
 
@@ -38,7 +39,7 @@ public class MainController {
         double step = Double.parseDouble(h.getText());
 
         int steps = operations.calcSteps(a, b, step);
-        ArrayList<Point> values = operations.getMassiveFromData(a, step, steps);
+        List<Point> values = operations.getMassiveFromData(a, step, steps);
         operations.tabulation(values);
         Point maxValue = operations.findMax(values);
         Point minValue = operations.findMin(values);
